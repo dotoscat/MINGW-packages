@@ -3,8 +3,8 @@
 _realname=ogre3d
 pkgbase=mingw-w64-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
-pkgver=1.12.6
-pkgrel=4
+pkgver=13.3.4
+pkgrel=1
 pkgdesc="A cross-platform 3D game engine (mingw-w64)"
 arch=('any')
 mingw_arch=('mingw32' 'mingw64' 'ucrt64' 'clang64' 'clang32')
@@ -28,12 +28,9 @@ depends=("${MINGW_PACKAGE_PREFIX}-boost"
          "${MINGW_PACKAGE_PREFIX}-python"
          "${MINGW_PACKAGE_PREFIX}-pugixml"
          "${MINGW_PACKAGE_PREFIX}-tinyxml"
-         "${MINGW_PACKAGE_PREFIX}-winpthreads"
-         "${MINGW_PACKAGE_PREFIX}-zlib"
-         "${MINGW_PACKAGE_PREFIX}-zziplib")
+         "${MINGW_PACKAGE_PREFIX}-winpthreads")
 options=('staticlibs' '!strip') # '!buildflags'
-source=(${_realname}-${pkgver}.tar.gz::"https://github.com/OGRECave/ogre/archive/v${pkgver}.tar.gz"
-        git+https://github.com/ocornut/imgui.git#commit=e5cb04b132cba94f902beb6186cb58b864777012
+source=(${_realname}-${pkgver}.tar.gz::"https://github.com/OGRECave/ogre/archive/refs/tags/v${pkgver}.tar.gz"
         002-link-shared-freeimage.patch
         004-use-mingw-w64-directx.patch
         010-missing-include.patch
@@ -41,8 +38,7 @@ source=(${_realname}-${pkgver}.tar.gz::"https://github.com/OGRECave/ogre/archive
         012-add-link-library.patch
         014-custom-install.patch
         020-dx11-mingw.patch)
-sha256sums=('c6347094733b459b6e8bb10f6ae234a66b635e3ef4212ba536b8fa146a775acf'
-            'SKIP'
+sha256sums=('fb809bcaf5cdf2829f8a413784d7698091fbeefd3998ac202f4993d56893d96b'
             '67966d6e0791c5804ed5cbec116594ebb72e9633118c31458dfa16181fdd01b2'
             'c7ca64dbd9a8f3f0271c12739807021a5c0782d254c4142c6e86746a96a44438'
             'd4e812fceb3dadc20c85857e3e624654cbc6bd4ebd20990fed2e5e84adfa9272'
@@ -53,7 +49,7 @@ sha256sums=('c6347094733b459b6e8bb10f6ae234a66b635e3ef4212ba536b8fa146a775acf'
 
 prepare() {
   # Workaround packaging bug
-  cp -rf imgui/* ogre-${pkgver}/Components/Overlay/src/imgui/
+  # cp -rf imgui/* ogre-${pkgver}/Components/Overlay/src/imgui/
 
   cd "${srcdir}/ogre-${pkgver}"
   patch -p1 -i ${srcdir}/002-link-shared-freeimage.patch
